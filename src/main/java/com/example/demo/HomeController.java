@@ -1,15 +1,13 @@
 package com.example.demo;
 
+import com.cloudinary.utils.ObjectUtils;
 import com.sun.tracing.dtrace.ModuleAttributes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.thymeleaf.util.ObjectUtils;
+
 
 import java.io.IOException;
 import java.util.Map;
@@ -35,10 +33,10 @@ public class HomeController {
         return "form";
     }
 
-    @GetMapping("/add")
+    @PostMapping("/add")
     public String processActor(@ModelAttribute Actor actor,
-                               @RequestParam("file") MultipartFile file) {
-        if (file.isEmpty()) {
+                               @RequestParam("file")MultipartFile file){
+        if (file.isEmpty()){
             return "redirect:/add";
         }
         try {
@@ -48,7 +46,6 @@ public class HomeController {
             actorRepository.save(actor);
         } catch (IOException e) {
             e.printStackTrace();
-
         return "redirect:/add";
     }
     return "redirect:/";
